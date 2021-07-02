@@ -52,6 +52,7 @@ const startGame = function(){
 }
 
 const answer = function(){
+    // testing buttons
     alert('test')
 }
 
