@@ -13,7 +13,7 @@ let currentQuestion = {
       "Commodore"
     ]
   }
-  
+  let currentAnswer = ""
   let possibleAnswers = [currentQuestion.correct_answer,]
 
   const getAQuestion = function(){
@@ -31,29 +31,42 @@ const shuffleAnswers = (array) => {
       array[j] = temp;
     }
   }
+  let idOfThis = function(){
+      alert(this.id)
+  }
+  const createAnswerButtons = function(){
+    for (let i=0; i < possibleAnswers.length;i++){
+        let newQuizButton = document.createElement('button')
+        newQuizButton.classList.add('answerButton')
+        newQuizButton.onclick = function(event) {
+            currentAnswer = this.innerText}
+        newQuizButton.addEventListener('click', answer)
+        newQuizButton.innerText = possibleAnswers[i]
+        document.getElementById('buttonContainer').appendChild(newQuizButton)
+     }
+}
 
 const startGame = function(){
     gameStartingButtons = document.getElementsByClassName('startButton')
     for (let i = gameStartingButtons.length -1; i >= 0; i--){
         gameStartingButtons[i].remove()
     }
-
     getAQuestion()
-
     shuffleAnswers(possibleAnswers)
-    for (let i=0; i < possibleAnswers.length;i++){
-        let newQuizButton = document.createElement('button')
-        newQuizButton.classList.add('answerButton')
-        newQuizButton.addEventListener('onclick', answer())
-        newQuizButton.innerText = possibleAnswers[i]
-        document.getElementById('buttonContainer').appendChild(newQuizButton)
+    createAnswerButtons()    
+}
+
+    const answer = function(){
+        if (currentAnswer === currentQuestion.correct_answer){
+            userScore += 1
+        document.querySelector('p').innerText = userScore
     }
-    
-}
-
-const answer = function(){
-    // testing buttons
-    alert('test')
-}
-
-
+    let answerButtons = document.getElementsByClassName('answerButton')
+    let buttonContainerDiv = document.getElementById('buttonContainer')
+    while(answerButtons.length > 0){
+        buttonContainerDiv.removeChild(answerButtons[0])
+    }
+    getAQuestion()
+    shuffleAnswers(possibleAnswers)
+    createAnswerButtons()  
+    }
