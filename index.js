@@ -13,8 +13,8 @@ let currentQuestion = {
       "Commodore"
     ]
   }
-  let currentAnswer = ""
-  let possibleAnswers = [currentQuestion.correct_answer,]
+let currentAnswer = ""
+let possibleAnswers = [currentQuestion.correct_answer,]
 
   const getAQuestion = function(){
     document.getElementById('questionContainer').innerText = currentQuestion.question
@@ -45,6 +45,13 @@ const shuffleAnswers = (array) => {
         document.getElementById('buttonContainer').appendChild(newQuizButton)
      }
 }
+const deleteButtons = function(){
+    let answerButtons = document.getElementsByClassName('answerButton')
+    let buttonContainerDiv = document.getElementById('buttonContainer')
+    while(answerButtons.length > 0){
+        answerButtons[0].parentNode.removeChild(answerButtons[0]);
+    }
+}
 
 const startGame = function(){
     gameStartingButtons = document.getElementsByClassName('startButton')
@@ -59,13 +66,13 @@ const startGame = function(){
     const answer = function(){
         if (currentAnswer === currentQuestion.correct_answer){
             userScore += 1
-        document.querySelector('p').innerText = userScore
-    }
-    let answerButtons = document.getElementsByClassName('answerButton')
-    let buttonContainerDiv = document.getElementById('buttonContainer')
-    while(answerButtons.length > 0){
-        buttonContainerDiv.removeChild(answerButtons[0])
-    }
+        document.getElementById('userScore').innerText = userScore
+        }
+    questionsCounter += 1
+    document.getElementById('questionCounter').innerText = questionsCounter    
+    
+    deleteButtons()
+    possibleAnswers = [currentQuestion.correct_answer,]
     getAQuestion()
     shuffleAnswers(possibleAnswers)
     createAnswerButtons()  
